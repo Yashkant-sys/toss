@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cricket Toss</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #f0f0f0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .coin {
+      width: 200px;
+      height: 200px;
+      background-color: gray;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+      transition: background-color 0.5s;
+    }
+
+    .flip {
+      animation: flip 1s ease-in-out;
+    }
+
+    @keyframes flip {
+      0% { transform: rotateY(0deg); }
+      50% { transform: rotateY(180deg); }
+      100% { transform: rotateY(360deg); }
+    }
+
+    #controls {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 12px 18px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+    }
+
+    #flipBtn {
+      background-color: #007bff;
+    }
+
+    #headBtn {
+      background-color: green;
+    }
+
+    #tailBtn {
+      background-color: red;
+    }
+
+    .selected {
+      outline: 3px solid black;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="coin" id="coin">TOSS</div>
+
+  <div id="controls">
+    <button class="btn" id="headBtn">HEAD</button>
+    <button class="btn" id="tailBtn">TAIL</button>
+    <button class="btn" id="flipBtn">Flip Toss</button>
+  </div>
+
+  <script>
+    const coin = document.getElementById('coin');
+    const flipBtn = document.getElementById('flipBtn');
+    const headBtn = document.getElementById('headBtn');
+    const tailBtn = document.getElementById('tailBtn');
+
+    let selectedResult = null;
+
+    headBtn.onclick = () => {
+      selectedResult = "HEAD";
+      headBtn.classList.add('selected');
+      tailBtn.classList.remove('selected');
+    };
+
+    tailBtn.onclick = () => {
+      selectedResult = "TAIL";
+      tailBtn.classList.add('selected');
+      headBtn.classList.remove('selected');
+    };
+
+    flipBtn.onclick = () => {
+      if (!selectedResult) {
+        alert("Please select HEAD or TAIL before flipping!");
+        return;
+      }
+
+      coin.textContent = "TOSSING...";
+      coin.style.backgroundColor = "gray";
+      coin.classList.add('flip');
+
+      setTimeout(() => {
+        if (selectedResult === "HEAD") {
+          coin.textContent = "HEAD";
+          coin.style.backgroundColor = "green";
+        } else {
+          coin.textContent = "TAIL";
+          coin.style.backgroundColor = "red";
+        }
+        coin.classList.remove('flip');
+      }, 1000);
+    };
+  </script>
+
+</body>
+</html>
